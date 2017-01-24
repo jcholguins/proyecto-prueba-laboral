@@ -5,7 +5,7 @@
         public $connection = null;
 
         private $_userName = "root";
-        private $_password = "felipe0025";
+        private $_password = "camilo";
         private $_dataBaseName = "reservas";
         private $_host = "localhost";
 
