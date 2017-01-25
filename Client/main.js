@@ -10,10 +10,6 @@ $(function(){
         var name = $("#client_name").val();
         var email = $("#client_email").val();
 
-        
-
-
-
         $.ajax({
             url: 'Server/api/AddDB.php',
             method: 'post',
@@ -33,7 +29,56 @@ $(function(){
             alert(data.responseMessage);
         })
         .fail(function(){
-            alert('Error1');
+            alert('Error guardando los datos');
+        });
+
+    });
+
+    $('#btn_search').click(function(){
+
+        var query_identity_number = $("#query_identity_number").val();
+
+        $("#response").html("");
+
+        $.ajax({
+            url: 'Server/api/GetUserData.php',
+            method: 'post',
+            data: {
+                query_identity_number: query_identity_number
+            }
+        }).done(function(data){
+
+            data = JSON.parse(data);
+
+            if(data.responseData)
+            {
+                var html = 
+                "<table border='1'>" +
+                "   <tr>" +
+                "       <td>Id</td>" +
+                "       <td>Cédula</td>" +
+                "       <td>Nombre</td>" +
+                "       <td>Email</td>" +
+                "   </tr>";
+
+                for(var i = 0; i < data.responseData.length; i++)
+                {
+                    html += 
+                    "       <tr>" +
+                    "           <td>"+ data.responseData[i].UserID +"</td>" +
+                    "           <td>"+ data.responseData[i].UserIdentityNumber +"</td>" +
+                    "           <td>"+ data.responseData[i].UserName +"</td>" +
+                    "           <td>"+ data.responseData[i].UserEmail +"</td>" +
+                    "       </tr>";
+                }
+
+                html += "</table>";
+
+                $("#response").html(html);
+            }
+        })
+        .fail(function(){
+            alert('Error obteniendo los datos');
         });
 
     });

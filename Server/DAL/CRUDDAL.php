@@ -60,20 +60,19 @@
             $dataBaseServicesBLL = new DataBaseServicesBLL();
             $dataBaseServicesBLL->InitializeDataBaseConnection();
 
-            $query = "INSERT INTO reserva (rese_id, rese_clie_id, rese_fecha, rese_valo_tota, rese_observaciones) VALUES (:id, :clie_id, :fecha, :valor_total, :observaciones)";
+            $query = "INSERT INTO reserva (rese_id, rese_fecha, rese_valo_tota, rese_observaciones) VALUES (:id, :fecha, :valor_total, :observaciones)";
+            
             $arrayParameters = array(
                 ':id' => NULL, 
-                ':clie_id' => NULL, 
                 ':fecha' => getdate(),
-                ':valor_total' => $x*$y ,
+                ':valor_total' => $x*$y,
                 ':observaciones' => $paramsObj1->ser_descripcion);
-
             
             $q = $dataBaseServicesBLL->connection->prepare($query);
             $q->execute($arrayParameters);
 
             $myObj1 = (object) [
-                "responseMessage" => "Servicio guardado"
+                "responseMessage" => "Reserva guardada"
             ];
 
             $dataBaseServicesBLL->connection = null;
@@ -87,12 +86,10 @@
             $dataBaseServicesBLL = new DataBaseServicesBLL();
             $dataBaseServicesBLL->InitializeDataBaseConnection();
 
-            $query = "INSERT INTO rese_deta (rd_id, rd_rese_id, rd_cantidad, rd_serv_id, rd_valo_unit, rd_valo_tota) VALUES (:id, :rese_id, :cantidad, :serv_id, :val_unit, :val_total)";
+            $query = "INSERT INTO rese_deta (rd_id, rd_cantidad, rd_valo_unit, rd_valo_tota) VALUES (:id, :cantidad, :val_unit, :val_total)";
             $arrayParameters = array(
                 ':id' => NULL, 
-                ':rese_id' => NULL, 
                 ':cantidad' => $paramsObj1->ser_cantidad,
-                ':serv_id' => NULL,
                 ':val_unit' => $paramsObj1->ser_valo_serv,
                 ':val_total' => (($paramsObj1->ser_cantidad)*($paramsObj1->ser_valo_serv))
                 );
@@ -108,6 +105,52 @@
             $dataBaseServicesBLL->connection = null;
 
             return $myObj1;
+        }
+
+        public function GetUserData($paramsObj)
+        {
+            $dataBaseServicesBLL = new DataBaseServicesBLL();
+            $dataBaseServicesBLL->InitializeDataBaseConnection();
+
+            $query = "SELECT * FROM clientes WHERE clie_nume_docu = :clie_nume_docu";
+            $arrayParameters = array(
+                ':clie_nume_docu' => $paramsObj->query_identity_number);
+
+            
+            $q = $dataBaseServicesBLL->connection->prepare($query);
+            $q->execute($arrayParameters);
+
+            $result = $q->fetchAll();
+
+            $myObj = (object) [
+                "responseMessage" => "",
+                "responseData" => null
+            ];
+
+            $itemsList = array();
+            while ($row = array_shift($result)) 
+            {
+                $userInfoDTO = new UserInfoDTO();
+
+                $userInfoDTO->UserID = $row['clie_id'];
+                $userInfoDTO->UserIdentityNumber = $row['clie_nume_docu'];
+                $userInfoDTO->UserName = $row['clie_nombre'];
+                $userInfoDTO->UserEmail = $row['clie_email'];
+
+                array_push($itemsList, $userInfoDTO);
+            }
+
+            if($itemsList == null)
+            {
+                $myObj->responseMessage = "No se encontraron resultados";
+                return $myObj;
+            } 
+            
+            $myObj->responseData = $itemsList;
+
+            $dataBaseServicesBLL->connection = null;
+
+            return $myObj;
         }
     }
 

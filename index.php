@@ -93,10 +93,36 @@
             </form>
         </fieldset>
     </div>
+
     <div>
+        <fieldset style="width: 50%">
+        
+            <legend>Consultas</legend>
+
+            <div>
+                <table>
+                    <tr>
+                        <td>
+                            <label for="query_identity_number">Cédula</label>
+                        </td>
+                        <td>
+                            <input type="number" id="query_identity_number">
+                        </td>
+                    </tr>
+                </table>
+
+                <input type="button" 
+                       id="btn_search" 
+                       value="Buscar">
+            </div>
+        
         </fieldset>
     </div>
-    <fieldset></fieldset>
+
+    <br>
+
+    <div id="response"></div>
+
 </body>
 
 </html>
