@@ -9,8 +9,8 @@
 </head>
 <body>
     <div>
-        <fieldset style="width: 30%">
-            <legend>Registrar cliente</legend>
+        <fieldset style="width: 50%">
+            <legend>Adicionar Servicio</legend>
             <form>
 
                 <table>
@@ -44,56 +44,51 @@
                                    name="client_email">  
                         </td>
                     </tr>
-                </table>  
-
-                <input type="button" 
-                       id="btn_add_client" 
-                       value="Registrar">
-
-            </form>
-        </fieldset>
-    </div>
-    <div>
-        <fieldset style="width: 30%">
-            <legend>Adicionar reservas</legend>
-            <form>
-
-                <table>
                     <tr>
                         <td>
-                            <label for="client_identity_number">Plan:</label>                        
-                        </td>
-                        <td>
-                            <input type="number" 
-                                   id="client_identity_number" 
-                                   name="client_identity_number">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="client_name">Nombre:</label>           
+                            <label for="ser_nombre">Servicio:</label>                        
                         </td>
                         <td>
                             <input type="text" 
-                                   id="client_name" 
-                                   name="client_name">
+                                   id="ser_nombre" 
+                                   name="ser_nombre">
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <label for="client_email">Email:</label>          
+                            <label for="cantidad">Cantidad:</label>           
                         </td>
                         <td>
-                            <input type="email" 
-                                   id="client_email" 
-                                   name="client_email">  
+                            <input type="number" 
+                                   id="rd_cantidad" 
+                                   name="rd_cantidad">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="ser_descripcion">Descripcion:</label>           
+                        </td>
+                        <td>
+                            <input type="text" 
+                                   id="ser_descripcion" 
+                                   name="ser_descripcion">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="ser_valo_serv">Valor:</label>          
+                        </td>
+                        <td>
+                            <input type="number" 
+                                   id="ser_valo_serv" 
+                                   name="ser_valo_serv">  
                         </td>
                     </tr>
                 </table>  
 
                 <input type="button" 
-                       id="btn_add_client" 
-                       value="Registrar">
+                       id="btn_add_service" 
+                       value="Registrar Servicio">
 
             </form>
         </fieldset>
@@ -103,4 +98,5 @@
     </div>
     <fieldset></fieldset>
 </body>
+
 </html>

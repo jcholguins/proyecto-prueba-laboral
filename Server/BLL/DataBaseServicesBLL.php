@@ -17,5 +17,5 @@
             $this->connection = new PDO($_connectionString, $this->_userName, $this->_password) or die ("Error to make the connection with the data base");
         }
     }
-
-?>
+    
+?>                                  
